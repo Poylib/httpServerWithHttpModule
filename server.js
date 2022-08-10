@@ -4,10 +4,14 @@ const { createUser,postCreated,getPostList,PatchPost } = require('./app');
 const app = express();
 app.use(express.json());
 
-app.post('/signup', createUser);
-app.post('/postman', postCreated);
-app.get('/postman', getPostList);
-app.patch('/postman',PatchPost)
+app.get('/', (req, res) => {
+  res.status(200).json({ message: "/pong" });
+});
+
+app.post('/signup', createUser);  // 미션1
+app.post('/postman', postCreated);  // 미션2
+app.get('/posts', getPostList); //미션 3
+app.patch('/postman',PatchPost) //미션 4
 
 const server = http.createServer(app);
 server.listen(8000, () => {
