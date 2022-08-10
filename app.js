@@ -76,4 +76,9 @@ const getPostList = (req, res) => {
   res.json({ data: posts })
 }
 
-module.exports = { createUser,postCreated,getPostList };
+const PatchPost = (req, res) => {
+  posts[0].postingContent = "노드"
+  res.json({data:posts[0]})
+}
+
+module.exports = { createUser,postCreated,getPostList,PatchPost };
