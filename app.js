@@ -78,6 +78,7 @@ const getPostList = (req, res) => {
 
 const PatchPost = (req, res) => {
   posts[0].postingContent = "노드"
+  res.status(200)
   res.json({data:posts[0]})
 }
 
