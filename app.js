@@ -82,4 +82,15 @@ const PatchPost = (req, res) => {
   }
   res.status(200).json({ data: newPost });
 }
-module.exports = { createUser,createPost,getPostList,PatchPost };
+
+const deletePost = (req, res) => {
+  const { id, userId } = req.body
+  const postCheck = posts.find(v => v.id === id && v.userId === userId);
+  const postIndex = posts.indexOf(postCheck);
+  posts.splice(postIndex, 1);
+  console.log(posts)
+
+  res.status(200).json({ message: "postingDeleted" });
+}
+
+module.exports = { createUser,createPost,getPostList,PatchPost,deletePost };
