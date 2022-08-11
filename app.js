@@ -87,10 +87,16 @@ const deletePost = (req, res) => {
   const { id, userId } = req.body
   const postCheck = posts.find(v => v.id === id && v.userId === userId);
   const postIndex = posts.indexOf(postCheck);
-  posts.splice(postIndex, 1);
-  console.log(posts)
-
-  res.status(200).json({ message: "postingDeleted" });
+  if (postCheck) {
+    posts.splice(postIndex, 1);
+    posts.forEach(v => v.id--);
+    console.log(posts)
+    res.status(200).json({ message: "postingDeleted" });
+  } else {
+    res.status(403).json({ message: "delete failed" });
+  }
 }
+
+
 
 module.exports = { createUser,createPost,getPostList,PatchPost,deletePost };
