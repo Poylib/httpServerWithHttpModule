@@ -12,6 +12,7 @@ const users = [
     password: "password",
   },
 ];
+let newUserId = users.length + 1;
 
 const posts = [
   {
@@ -28,8 +29,7 @@ const posts = [
   },
 ];
 
-let postId = 3;
-
+let postId = posts.length+1;
 
 const getPostList = (req, res) => {
   let newPosts = posts.map((post) => {
@@ -46,26 +46,18 @@ const getPostList = (req, res) => {
 }
 
 const createUser = (req, res) => {
-  const lastUser = users[users.length - 1];
-  if (lastUser) {
-    users.push({
-      id: ++lastUser.id,
-      name: req.body.name,
-      email: req.body.email,
-      password: req.body.password,
-    })
-  } else {
-    users.push({
-      id: 1,
-      name: req.body.name,
-      email: req.body.email,
-      password: req.body.password,
-    })
-  }
+  const userData = req.body.data;
+  users.push({
+    id: newUserId++,
+    name: userData.name,
+    email: userData.email,
+    password: userData.password,
+  })
   res.status(201).json({ message: "userCreated" });
 }
 
-const postCreated = (req, res) => {
+const createPost = (req, res) => {
+  console.log(req.body)
   posts.push({
     id: postId++,
     title: req.body.title,
@@ -77,16 +69,10 @@ const postCreated = (req, res) => {
 }
 
 const PatchPost = (req, res) => {
-  ////////////////////////////////////////
-  // console.log(posts.userId);
-  //////////undifined////////////////////
   const { id, postingContent } = req.body;
-  console.log(postingContent);
-  console.log(req.body);
   const post = posts.find((post) => post.id === id);
   post.content = postingContent;
   const user = users.find((user) => post.userId === user.id);
-  // console.log(posts);
   const newPost = {
       userID: post.id,
       userName: user.name,
@@ -94,8 +80,6 @@ const PatchPost = (req, res) => {
       postingTitle: post.title,
       postingContent: post.content
   }
-  // posts[0].postingContent = "노드"
   res.status(200).json({ data: newPost });
 }
-
-module.exports = { createUser,postCreated,getPostList,PatchPost };
+module.exports = { createUser,createPost,getPostList,PatchPost };

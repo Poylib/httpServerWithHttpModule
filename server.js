@@ -1,6 +1,6 @@
 const http = require('http');
 const express = require('express');
-const { createUser,postCreated,getPostList,PatchPost } = require('./app');
+const { createUser,createPost,getPostList,PatchPost } = require('./app');
 const app = express();
 app.use(express.json());
 
@@ -9,7 +9,7 @@ app.get('/', (req, res) => {
 });
 
 app.post('/signup', createUser);  // 미션1
-app.post('/postman', postCreated);  // 미션2
+app.post('/postman', createPost);  // 미션2
 app.get('/posts', getPostList); //미션 3
 app.patch('/postman',PatchPost) //미션 4
 
