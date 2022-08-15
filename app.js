@@ -89,7 +89,9 @@ const deletePost = (req, res) => {
   const postIndex = posts.indexOf(postCheck);
   if (postCheck) {
     posts.splice(postIndex, 1);
-    posts.forEach(v => v.id--);
+    for (let i = postIndex; i < posts.length; i++){
+      posts.id--;
+    }
     console.log(posts)
     res.status(200).json({ message: "postingDeleted" });
   } else {
@@ -97,6 +99,25 @@ const deletePost = (req, res) => {
   }
 }
 
+const getInfo = (req, res) => {
+  const userId = Number(req.query.userId);
+  const userInfo = users.find((user) => user.id === userId);
+  const postings = posts.filter((post) => post.userId === userId);
+  let newPostings = [];
+  postings.forEach((post) => {
+    let tmp = {
+      postingId: post.id,
+      posting: post.title,
+      postingContent: post.content,
+    };
+    newPostings.push(tmp);
+  });
+  const newPost = {
+    userId,
+    userName: userInfo.name,
+    postings: newPostings,
+  }
+  res.status(200).json({ data: newPost });
+}
 
-
-module.exports = { createUser,createPost,getPostList,PatchPost,deletePost };
+module.exports = { createUser,createPost,getPostList,PatchPost,deletePost,getInfo };
